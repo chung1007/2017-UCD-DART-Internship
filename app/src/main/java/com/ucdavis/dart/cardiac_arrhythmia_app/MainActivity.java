@@ -1,11 +1,11 @@
 package com.ucdavis.dart.cardiac_arrhythmia_app;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         connect();
-        AcceptThread mAcceptThread = new AcceptThread(mDevice);
+        AcceptThread mAcceptThread = new AcceptThread(mDevice, mBluetoothAdapter, MainActivity.this);
         mAcceptThread.start();
     }
 
