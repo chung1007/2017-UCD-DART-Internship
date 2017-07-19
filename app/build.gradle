@@ -23,4 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.robinhood.spark:spark:1.1.2'
+    compile 'com.androidplot:androidplot:0.6.1'
+    compile 'com.androidplot:androidplot-core:0.6.1'
 }
