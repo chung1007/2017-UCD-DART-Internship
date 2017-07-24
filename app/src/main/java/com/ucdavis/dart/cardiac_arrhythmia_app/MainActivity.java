@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         setMergedPlotParam();
         connect();
         AcceptThread mAcceptThread = new AcceptThread(mDevice, mBluetoothAdapter, MainActivity.this);
@@ -51,13 +55,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void setMergedPlotParam() {
         ecgHistoryPlot = (XYPlot)findViewById(R.id.ecgSPlot);
+        Paint p = new Paint();
+        p.setColor(Color.BLACK);
+        ecgHistoryPlot.setBackgroundColor(Color.BLACK);
         ecgHistoryPlot
                 .setRangeBoundaries(-10, 100, BoundaryMode.FIXED);
-        ecgHistoryPlot.setDomainBoundaries(0, 60, BoundaryMode.FIXED);
+        ecgHistoryPlot.setDomainBoundaries(0, Constants.domain, BoundaryMode.FIXED);
         ecgHistoryPlot.addSeries(ecgRaLlHistorySeries,
                 new LineAndPointFormatter(
                         Color.rgb(0, 255, 0), null, null, null));
-        ecgHistoryPlot.setDomainStepValue(5);
+        ecgHistoryPlot.setDomainStepValue(1);
         ecgHistoryPlot.setTicksPerRangeLabel(3);
         ecgHistoryPlot.setDomainLabel("Time");
         ecgHistoryPlot.getDomainLabelWidget().pack();
@@ -65,4 +72,5 @@ public class MainActivity extends AppCompatActivity {
         ecgHistoryPlot.getRangeLabelWidget().pack();
         //ecgHistoryPlot.disableAllMarkup();
     }
+
 }

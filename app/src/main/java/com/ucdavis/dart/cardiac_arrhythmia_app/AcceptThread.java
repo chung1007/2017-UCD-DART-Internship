@@ -45,7 +45,7 @@ public class AcceptThread extends Thread {
         } catch (NullPointerException NPE) {
             Log.e("No Socket", "Available");
         }
-        ConnectedThread mConnectedThread = new ConnectedThread(mmSocket, context);
+        ConnectedThread mConnectedThread = new ConnectedThread(mmSocket, context, mmDevice);
         mConnectedThread.start();
 
     }

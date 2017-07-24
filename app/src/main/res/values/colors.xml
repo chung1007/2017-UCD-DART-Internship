@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="ap_transparent">#00000000</color>
+    <color name="ap_black">#000</color>
+    <color name="ap_charcoal">#111</color>
+    <color name="ap_white">#FFF</color>
+    <color name="off_white">#EEE</color>
+    <color name="ap_gray">#888</color>
 </resources>
