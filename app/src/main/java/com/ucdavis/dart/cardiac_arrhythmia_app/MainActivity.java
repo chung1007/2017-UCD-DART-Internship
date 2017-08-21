@@ -9,7 +9,7 @@ import android.graphics.Paint;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.widget.Spinner;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ecgHistoryPlot = (XYPlot)findViewById(R.id.ecgSPlot);
         Paint p = new Paint();
         p.setColor(Color.BLACK);
-        ecgHistoryPlot.setBackgroundColor(Color.BLACK);
+        ecgHistoryPlot.setBackgroundColor(Color.GRAY);
         ecgHistoryPlot
                 .setRangeBoundaries(-10, 100, BoundaryMode.FIXED);
         ecgHistoryPlot.setDomainBoundaries(0, Constants.domain, BoundaryMode.FIXED);
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         ecgHistoryPlot.getDomainLabelWidget().pack();
         ecgHistoryPlot.setRangeLabel("Level");
         ecgHistoryPlot.getRangeLabelWidget().pack();
-        //ecgHistoryPlot.disableAllMarkup();
     }
 
 }

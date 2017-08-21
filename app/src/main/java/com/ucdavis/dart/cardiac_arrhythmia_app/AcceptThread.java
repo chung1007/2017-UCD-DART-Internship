@@ -17,7 +17,7 @@ public class AcceptThread extends Thread {
     private BluetoothSocket mmSocket;
     private BluetoothDevice mmDevice;
     private Activity context;
-    private static final UUID MY_UUID = UUID.fromString("f741fa52-bd68-4f10-8529-934017a049b8");
+    //private static final UUID MY_UUID = UUID.fromString("f741fa52-bd68-4f10-8529-934017a049b8");
 
     public AcceptThread(BluetoothDevice device, BluetoothAdapter mBluetoothAdapter, Activity context) {
         this.mBluetoothAdapter = mBluetoothAdapter;
@@ -25,7 +25,7 @@ public class AcceptThread extends Thread {
         if(device != null) {
             mmDevice = device;
             try {
-                mmSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+                mmSocket = device.createRfcommSocketToServiceRecord(Constants.MY_UUID);
             } catch (IOException e) {
 
             }
@@ -45,7 +45,7 @@ public class AcceptThread extends Thread {
         } catch (NullPointerException NPE) {
             Log.e("No Socket", "Available");
         }
-        ConnectedThread mConnectedThread = new ConnectedThread(mmSocket, context, mmDevice);
+        ConnectedThread mConnectedThread = new ConnectedThread(mmSocket, context);
         mConnectedThread.start();
 
     }

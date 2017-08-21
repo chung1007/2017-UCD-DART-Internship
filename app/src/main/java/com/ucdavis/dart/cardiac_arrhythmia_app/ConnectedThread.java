@@ -1,34 +1,36 @@
 package com.ucdavis.dart.cardiac_arrhythmia_app;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.androidplot.xy.SimpleXYSeries;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by sam on 7/8/17.
  */
-public class ConnectedThread extends Thread {
+public class ConnectedThread extends Thread{
     public BluetoothSocket mmSocket;
     public InputStream mmInStream;
     public OutputStream mmOutStream;
     public Activity activity;
     private Boolean notPaused = true;
 
-    public ConnectedThread(BluetoothSocket socket, Activity context, BluetoothDevice device) {
+    public ConnectedThread(BluetoothSocket socket, Activity context) {
         this.activity = context;
         try {
             mmSocket = socket;
@@ -45,28 +47,60 @@ public class ConnectedThread extends Thread {
 
         }
         graphTouchListener();
+
     }
 
     public void run() {
         initializeConnection();
-        while (mmSocket != null) {
-            if (notPaused){
-                final BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
-                try {
-                    final int dataPoint = Integer.parseInt(reader.readLine());
-                    activity.runOnUiThread(new Runnable() {
+        byte[] buffer = new byte[2]; // buffer store for the stream
+        int bytes;
+        ArrayList<String> list = new ArrayList<>();
+         // bytes returned from read()
+        while (mmSocket!=null) {
+            try {
+                if(notPaused) {
+                    bytes = mmInStream.read(buffer);
+                    String readMessage = new String(buffer, 0, bytes);
+                    final String num = readMessage.replace("/", "");
+                    if(!num.equals("")){
+                        activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            drawMergedPlot(Integer.parseInt(num));
+                        }
+                    });
+                    }
+                }
+            } catch (IOException e) {
+                Log.e("ERROR ", "reading from btInputStream");
+                break;
+            }
+        }
+    }
+
+
+    //App Arduino
+
+    /*while (mmSocket != null) {
+        if (notPaused){
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
+            try {
+                final int dataPoint = Integer.parseInt(reader.readLine());
+                Log.e("message received: ", dataPoint + "");
+                    *//*activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             drawMergedPlot(dataPoint);
                         }
-                    });
+                    });*//*
 
-                } catch (IOException IO) {
-                    break;
-                }
+            } catch (IOException IO) {
+                break;
             }
         }
-    }
+    }*/
+
+
 
     public void initializeConnection() {
         try {
