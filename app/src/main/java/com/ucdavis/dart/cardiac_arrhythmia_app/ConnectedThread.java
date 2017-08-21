@@ -54,21 +54,23 @@ public class ConnectedThread extends Thread{
         initializeConnection();
         byte[] buffer = new byte[2]; // buffer store for the stream
         int bytes;
-        ArrayList<String> list = new ArrayList<>();
+        String s = "";
          // bytes returned from read()
         while (mmSocket!=null) {
             try {
                 if(notPaused) {
                     bytes = mmInStream.read(buffer);
                     String readMessage = new String(buffer, 0, bytes);
-                    final String num = readMessage.replace("/", "");
-                    if(!num.equals("")){
+                    s = s + readMessage;
+                    if(readMessage.contains("/")){
+                        final String num = s.replace(" ", "").replace("/", "");
                         activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            drawMergedPlot(Integer.parseInt(num));
-                        }
-                    });
+                            @Override
+                            public void run() {
+                                drawMergedPlot(Integer.parseInt(num));
+                            }
+                        });
+                        s = "";
                     }
                 }
             } catch (IOException e) {
