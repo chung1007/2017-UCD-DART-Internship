@@ -135,7 +135,6 @@ public class ConnectedThread extends Thread{
         if (MainActivity.ecgRaLlHistory.size() > Constants.domain - 1) {
             MainActivity.ecgRaLlHistory.removeFirst();
         }
-
         MainActivity.ecgRaLlHistory.addLast(EcgRaLl);
 
         MainActivity.ecgRaLlHistorySeries.setModel(MainActivity.ecgRaLlHistory,
