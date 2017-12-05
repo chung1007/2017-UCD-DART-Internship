@@ -81,28 +81,6 @@ public class ConnectedThread extends Thread{
     }
 
 
-    //App Arduino
-
-    /*while (mmSocket != null) {
-        if (notPaused){
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
-            try {
-                final int dataPoint = Integer.parseInt(reader.readLine());
-                Log.e("message received: ", dataPoint + "");
-                    *//*activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            drawMergedPlot(dataPoint);
-                        }
-                    });*//*
-
-            } catch (IOException IO) {
-                break;
-            }
-        }
-    }*/
-
-
 
     public void initializeConnection() {
         try {

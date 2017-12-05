@@ -6,6 +6,7 @@ const int RX_PIN = 8;
 const int TX_PIN = 9;
 SoftwareSerial bluetooth(RX_PIN, TX_PIN); 
 char commandChar;
+int counter = 0;
 
 void setup (){
     bluetooth.begin (9600);
@@ -18,7 +19,7 @@ void setTimerInterrupt(){
     TCCR1A = 0;     // set entire TCCR1A register to 0
     TCCR1B = 0;     // same for TCCR1B
     // set compare match register to desired timer count:
-    OCR1A = 77;
+    OCR1A = 77; //compare match register = [ 16,000,000Hz/ (prescaler * desired interrupt frequency) ] - 1
     // turn on CTC mode:
     TCCR1B |= (1 << WGM12);
     // Set CS10 and CS12 bits for 1024 prescaler:
@@ -46,9 +47,7 @@ void loop () {
 
 ISR(TIMER1_COMPA_vect)
 {
-    bluetooth.print(String(random(51)));
-    bluetooth.print(" / ");
-    
-    
+    bluetooth.print(random(100));
+    bluetooth.print("/");
 }
 
