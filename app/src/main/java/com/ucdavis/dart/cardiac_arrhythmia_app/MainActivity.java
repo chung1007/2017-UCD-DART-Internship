@@ -1,5 +1,6 @@
 package com.ucdavis.dart.cardiac_arrhythmia_app;
 
+import android.app.Notification;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public static SimpleXYSeries ecgLevelsSeries = new SimpleXYSeries(
             "ECG History");
     public static SimpleXYSeries ecgRaLlHistorySeries = new SimpleXYSeries("Pulse");
-    public static LinkedList<Integer> ecgRaLlHistory = new LinkedList<Integer>();
+    public static LinkedList<Double> ecgRaLlHistory = new LinkedList<Double>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
         p.setColor(Color.BLACK);
         ecgHistoryPlot.setBackgroundColor(Color.GRAY);
         ecgHistoryPlot
-                .setRangeBoundaries(-10, 100, BoundaryMode.FIXED);
-        ecgHistoryPlot.setDomainBoundaries(0, Constants.domain, BoundaryMode.FIXED);
+                .setRangeBoundaries(-0.500, -0.200, BoundaryMode.FIXED);
+        ecgHistoryPlot.setDomainBoundaries(0.0, Constants.domain, BoundaryMode.FIXED);
         ecgHistoryPlot.addSeries(ecgRaLlHistorySeries,
                 new LineAndPointFormatter(
                         Color.rgb(0, 255, 0), null, null, null));
-        ecgHistoryPlot.setDomainStepValue(1);
+        ecgHistoryPlot.setDomainStepValue(1.0);
         ecgHistoryPlot.setTicksPerRangeLabel(3);
         ecgHistoryPlot.setDomainLabel("Time");
         ecgHistoryPlot.getDomainLabelWidget().pack();

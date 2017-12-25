@@ -52,26 +52,28 @@ public class ConnectedThread extends Thread{
 
     public void run() {
         initializeConnection();
-        byte[] buffer = new byte[2]; // buffer store for the stream
+        byte[] buffer = new byte[1]; // buffer store for the stream
         int bytes;
         String s = "";
-         // bytes returned from read()
         while (mmSocket!=null) {
             try {
                 if(notPaused) {
                     bytes = mmInStream.read(buffer);
                     String readMessage = new String(buffer, 0, bytes);
                     s = s + readMessage;
-                    if(readMessage.contains("/")){
+                    if(readMessage.contains("/")) {
                         final String num = s.replace(" ", "").replace("/", "");
+                        Log.e("ARDUINO", num);
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                drawMergedPlot(Integer.parseInt(num));
+                                drawMergedPlot(Double.parseDouble(num));
                             }
                         });
                         s = "";
                     }
+
+
                 }
             } catch (IOException e) {
                 Log.e("ERROR ", "reading from btInputStream");
@@ -79,7 +81,6 @@ public class ConnectedThread extends Thread{
             }
         }
     }
-
 
 
     public void initializeConnection() {
@@ -105,7 +106,7 @@ public class ConnectedThread extends Thread{
             }
         });
     }
-    private static void drawMergedPlot(int EcgRaLl) {
+    private static void drawMergedPlot(Double EcgRaLl) {
         Number[] seriesRNumbers = { EcgRaLl};
         MainActivity.ecgLevelsSeries.setModel(Arrays.asList(seriesRNumbers),
                 SimpleXYSeries.ArrayFormat.Y_VALS_ONLY);
